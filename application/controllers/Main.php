@@ -26,6 +26,7 @@ class Main extends CI_Controller {
     public function send_mail() {
         $from_email = "email@example.com";
         $to_email = $this->input->post('email');
+        $file = $this->input->post('file');
         //Load email library
         $this->load->library('email');
         $from = $this->config->item('smtp_user'); 
@@ -34,9 +35,11 @@ class Main extends CI_Controller {
         $this->email->to($to_email);
         $this->email->subject('Send Email Codeigniter');
         $this->email->message('The email send using codeigniter library');
+        $this->email->attach('C:\Users\droppa_tomas\Desktop\pozvánka_vizitka.png');
 
         if ($this->email->send()) {
             echo 'Your Email has successfully been sent.';
+            echo json_encode($file);
         } else {
             show_error($this->email->print_debugger());
         }
